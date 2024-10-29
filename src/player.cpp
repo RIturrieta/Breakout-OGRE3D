@@ -27,31 +27,33 @@ bool BreakoutPlayer::keyReleased(const OgreBites::KeyboardEvent& evt)
 
 bool BreakoutPlayer::axisMoved(const OgreBites::AxisEvent& evt)
 {
-    // it looks like this is not working properly...
-    // I'm getting type = 11 or 14, which: always 0, and axis " ", ...
-    // Maybe a problem with OgreBites?
-    std::cout << evt.type << " - "
+    /*std::cout << evt.type << " - "
         << evt.which << " - "
-        << evt.axis << " - "
+        << static_cast<int>(evt.axis) << " - "
         << evt.value << std::endl;
+        */
+    unsigned int axisKey = static_cast<unsigned int>(evt.axis);
 
-/*
+    // only checking one specific axis
+    if (axisKey != 0)
+        return true;
+
     // JoyStick min/max is -32768 / 32767
-    constexpr int axisMinValue = -32768;
-    constexpr int axisMaxValue = 32767;
+    //constexpr int axisMinValue = -32768;
+    //constexpr int axisMaxValue = 32767;
 
-    const float axisNormalized = static_cast<float>(evt.value) / (axisMaxValue - axisMinValue);
+    //const float axisNormalized = static_cast<float>(evt.value) / (axisMaxValue - axisMinValue);
     //std::cout << evt.value << " -> " << axisNormalized << std::endl;
 
-    if (axisNormalized < -0.2f)
+    if (evt.value < -10000)
         direction = Direction::Left;
     
-    if (axisNormalized > 0.2f)
+    else if (evt.value > 10000)
         direction = Direction::Right;
     
     else
         direction = Direction::None;
-*/
+
     return true;
 }
 
